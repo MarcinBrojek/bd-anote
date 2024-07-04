@@ -1,10 +1,5 @@
 # bd-anote
 
-#Database
-#Django
-#HTML
-#Python
-
 aNote is a web application designed for managing notes related to university courses. It functions as a kind of social portal with two distinct types of users: regular users (students) and authorized users (instructors). Authorized users can add new subjects and create new class blocks, as well as perform all the actions available to regular users, such as creating notes for these class blocks. The application offers the following features:
 
 - Allows a regular user to become responsible for notes related to a specific class block.
@@ -39,6 +34,13 @@ username: admin password: admin
 ---
 
 ### App preview
+
+<div style="width:150px;height:150px;line-height:3em;overflow:scroll;padding:5px;">
+  
+<img width="1792" src="https://github.com/MarcinBrojek/bd-anote/assets/73189722/5e12ff7e-82a5-45cf-9a5f-93c6726f353c">
+<img width="1792" src="https://github.com/MarcinBrojek/bd-anote/assets/73189722/a9b6cb0c-3ffc-422e-8ecc-526682a4f375">
+
+</div>
 
 ---
 
