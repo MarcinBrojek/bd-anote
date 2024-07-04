@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "notes.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Moje notatki{% endblock %}
+
+{% block banner %}
+<div class="banner_buttons">
+    <form action="/profile/" method="get" class="profile_btn">
+        <button type="submit" class="banner">profil</button>
+    </form>
+    <form action="/profile/logout/" method="get" class="logout_btn">
+        <button type="submit" class="banner">wyloguj</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+<div class="search">
+    <div class="title">
+        Poprawki:
+    </div>
+    <div class="corrections_list_form">
+        {% for correction in corrections %}
+            <div class="item_grid">
+                <form class="correction" method="get" action="/profile/classes/{{ correction.classes_id }}/correction/add/" id="correction_{{ correction.id }}">
+                    <div onclick="getCorrection({{ correction.id }})">
+                        {{ correction.type }} ({{ correction.group }}) {{ correction.date }} {{ correction.start_time }} - {{ correction.end_time }} {{ correction.subject }}
+                    </div>
+                </form>
+                <div class="delete_btn" onclick="removeCorrection({{ correction.id }})">✖</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="list">
+    <div class="title">
+        Notatki:
+    </div>
+    <div class="notes_list_form">
+        {% for note in notes %}
+            <form method="get" action="/profile/classes/{{ note.classes_id }}/" id="note_{{ note.id }}">
+                <div class="item_grid" onclick="getNote({{ note.id }})">
+                    <label class="note">{{ note.type }} ({{ note.group }}) {{ note.date }} {{ note.start_time }} - {{ note.end_time }} {{ note.subject }}</label>
+                    <div class="counter">{{ note.corr_count }}</div>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    function getCorrection(id) {
+        document.getElementById('correction_'+id).submit();
+    }
+    function getNote(id) {
+        document.getElementById('note_'+id).submit();
+    }
+    function removeCorrection(index) {
+        window.location = "/correction/" + index + "/remove/";
+    }
+{% endblock %}

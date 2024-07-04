@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "classes.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Zajęcia{% endblock %}
+
+{% block banner %}
+<div class="banner_buttons">
+    <form action="/profile/" method="get" class="profile_btn">
+        <button type="submit" class="banner">profil</button>
+    </form>
+    <form action="/profile/logout/" method="get" class="logout_btn">
+        <button type="submit" class="banner">wyloguj</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+<div class="search">
+    <div class="title">
+        Filtr.
+    </div>
+    <form action="/profile/classes/" method="post">
+        {% csrf_token %}
+        <div class="text_field">
+            <label>Przedmiot :</label>
+            <input type="text" name="subject" value="{{ subject }}">
+        </div>
+        <div class="text_field">
+            <label>Data :</label>
+            <input type="date" name="date" value="{{ date }}">
+        </div>
+        <div class="text_field">
+            <label>Typ zajęć :</label>
+            <select name="classes_type">
+                <option value="" {% if classes_type == "" %}selected="selected"{% endif %}>Dowolne</option>
+                <option value="EXE" {% if classes_type == "EXE" %}selected="selected"{% endif %}>Ćwiczenia</option>
+                <option value="LAB" {% if classes_type == "LAB" %}selected="selected"{% endif %}>Laboratorium</option>
+                <option value="LEC" {% if classes_type == "LEC" %}selected="selected"{% endif %}>Wykład</option>
+                <option value="SEM" {% if classes_type == "SEM" %}selected="selected"{% endif %} >Seminarium</option>
+            </select>
+        </div>
+        <div class="text_field">
+            <label>Grupa :</label>
+            <input type="number" name="group_number" value="{{ group_number }}" min="1">
+        </div>
+        <div class="text_field">
+            <label>Tylko obserwowane :</label>
+            <select name="is_watched">
+                <option value="NIE" {% if is_watched == "NIE" %}selected="selected"{% endif %}>NIE</option>
+                <option value="TAK" {% if is_watched == "TAK" %}selected="selected"{% endif %}>TAK</option>
+            </select>
+        </div>
+        <button type="submit">Zastosuj filtr</button>
+    </form>
+</div>
+<div class="list">
+    <div class="title">
+        Wyszukane zajęcia:
+    </div>
+    <div class="classes_list_form">
+        {% for classes in filtered_classes %}
+            <form method="get" action="/profile/classes/{{ classes.id }}/" id="classes_{{ classes.id }}">
+                <div class="item" onclick="getClasses({{ classes.id }})">
+                    {{ classes.classes_type }}
+                    {{ classes.group_number }}
+                    {{ classes.start_time }}
+                    {{ classes.subject.name }}
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    function getClasses(id) {
+        document.getElementById('classes_'+id).submit();
+    }
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "add_classes.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Dodaj zajęcia{% endblock %}
+
+{% block banner %}
+<div class="banner_buttons">
+    <form action="/profile/" method="get" class="profile_btn">
+        <button type="submit" class="banner">profil</button>
+    </form>
+    <form action="/profile/logout/" method="get" class="logout_btn">
+        <button type="submit" class="banner">wyloguj</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+<div class="main">
+    <div class="title">
+        Podaj informacje potrzebne do utworzenia zajęć.
+    </div>
+    <form action="/profile/add-classes/" method="post">
+        {% csrf_token %}
+        <div class="text_field">
+            <label>Typ zajęć :</label>
+            <select name="classes_type">
+                <option value="EXE" {% if classes_type == "EXE" %}selected="selected"{% endif %}>Ćwiczenia</option>
+                <option value="LAB" {% if classes_type == "LAB" %}selected="selected"{% endif %}>Laboratorium</option>
+                <option value="LEC" {% if classes_type == "LEC" %}selected="selected"{% endif %}>Wykład</option>
+                <option value="SEM" {% if classes_type == "SEM" %}selected="selected"{% endif %} >Seminarium</option>
+            </select>
+        </div>
+        <div class="text_field">
+            <label>Grupa :</label>
+            <input type="number" name="group_number" value="{{ group_number }}" min="1">
+        </div>
+        <div class="text_field">
+            <label>Data :</label>
+            <input type="date" name="date" value="{{ date }}">
+        </div>
+        <div class="text_field">
+            <label>Godzina rozpoczęcia :</label>
+            <input type="time" name="start_time" {% if start_time %} value="{{ start_time }}"{% endif %}>
+        </div>
+        <div class="text_field">
+            <label>Godzina zakończenia :</label>
+            <input type="time" name="end_time" {% if end_time %} value="{{ end_time }}"{% endif %}>
+        </div>
+        <div class="text_field">
+            <label>Przedmiot :</label>
+            <input type="text" name="subject" value="{{ subject }}">
+        </div>
+        <button type="submit">Dodaj zajęcia</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "remind.css" %}">
+{% endblock %}
+
+{% block title %}Przypomnienie hasła{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+    <div class="main">
+        <div class="title">
+            Podaj swój email i odbierz hasło emailem do aNote.
+        </div>
+        <form action="/login/remind-password/" method="post">
+            {% csrf_token %}
+            <div class="text_field">
+                <label>Email :</label>
+                <input type="text" name="email">
+            </div>
+            <button type="submit">Przypomnij hasło</button>
+        </form>
+    </div>
+{% endblock %}

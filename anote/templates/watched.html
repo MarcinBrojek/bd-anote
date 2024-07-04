@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "watched.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Obserwowane{% endblock %}
+
+{% block banner %}
+<div class="banner_buttons">
+    <form action="/profile/" method="get" class="profile_btn">
+        <button type="submit" class="banner">profil</button>
+    </form>
+    <form action="/profile/logout/" method="get" class="logout_btn">
+        <button type="submit" class="banner">wyloguj</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+<div class="search">
+    <div class="title">
+        Dodaj grupę.
+    </div>
+    <form action="/profile/watched/" method="post">
+        {% csrf_token %}
+        <div class="text_field">
+            <label>Przedmiot :</label>
+            <input type="text" name="subject" value="{{ subject }}">
+        </div>
+        <div class="text_field">
+            <label>Typ zajęć :</label>
+            <select name="classes_type">
+                <option value="EXE" {% if classes_type == "EXE" %}selected="selected"{% endif %}>Ćwiczenia</option>
+                <option value="LAB" {% if classes_type == "LAB" %}selected="selected"{% endif %}>Laboratorium</option>
+                <option value="LEC" {% if classes_type == "LEC" %}selected="selected"{% endif %}>Wykład</option>
+                <option value="SEM" {% if classes_type == "SEM" %}selected="selected"{% endif %} >Seminarium</option>
+            </select>
+        </div>
+        <div class="text_field">
+            <label>Grupa :</label>
+            <input type="number" name="group_number" value="{{ group_number }}" min="1">
+        </div>
+        <button type="submit">Dodaj obserwację grupy</button>
+    </form>
+</div>
+<div class="list">
+    <div class="title">
+        Obserwowane grupy zajęciowe:
+    </div>
+    <div class="classes_list_form">
+        {% for watched in watched_list %}
+            <div class="item">
+                <label class="watched_group">{{ watched.classes_type }} {{ watched.group_number }} {{ watched.subject.name }}</label>
+                <div class="delete_btn" onclick="removeObserv({{ watched.id }})">✖</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    function removeObserv(index) {
+        window.location = "/profile/watched/remove/" + index + "/";
+    }
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "edit_note.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}{% if correction %}Poprawka{% else %}Edycja{% endif %} {{ subject }}{% endblock %}
+
+{% block banner %}
+    <div class="banner_buttons">
+        <form action="/profile/" method="get" class="profile_btn">
+            <button type="submit" class="banner">profil</button>
+        </form>
+        <form action="/profile/logout/" method="get" class="logout_btn">
+            <button type="submit" class="banner">wyloguj</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+    <div class="context">
+        <div class="names">
+            <div class="label_name">Przedmiot:</div>
+            <div class="label_name">Typ:</div>
+            <div class="label_name">Grupa:</div>
+            <div class="label_name">Data:</div>
+            <div class="label_name">Rozpoczęcie:</div>
+            <div class="label_name">Zakończenie:</div>
+            <div class="label_name">Kontakt:</div>
+        </div>
+        <div class="values">
+            <div class="label_value">{{ note.classes.subject.name }}</div>
+            <div class="label_value">({{ note.classes.classes_type }}) {% if note.classes.classes_type == "EXE" %}Ćwiczenia{% elif note.classes.classes_type == "LEC" %}Wykład{% elif note.classes.classes_type == "LAB" %}Laboratorium{% else %}Seminarium{% endif %}</div>
+            <div class="label_value">{{ note.classes.group_number }}</div>
+            <div class="label_value">{{ date }}</div>
+            <div class="label_value">{{ start_time }}</div>
+            <div class="label_value">{{ end_time }}</div>
+            <div class="label_value">{{ email }}</div>
+        </div>
+    </div>
+
+    <form actions="" method="POST" id="note_content">
+    {% csrf_token %}
+    <div class="options">
+        <select name="text_style">
+            <option value="LTX" {% if text_style == "LTX" %}selected="selected"{% endif %}>Latex</option>
+            <option value="MD" {% if text_style == "MD" %}selected="selected"{% endif %}>Markdown</option>
+            <option value="TXT" {% if text_style == "TXT" %}selected="selected"{% endif %}>Text</option>
+        </select>
+        <button type="button" class="download" onclick="saveTheForm()">zapisz{% if correction %} i zgłoś{% endif %}</button>
+        <button type="button" class="actions" onclick="goBackToNote()">wyjdź</button>
+    </div>
+        <textarea name="contents" cols="80" rows="10">{{ contents }}</textarea>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    function saveTheForm() {
+        let form = document.getElementById("note_content")
+        form.action = "/profile/classes/{{ classes_id }}/" + {% if correction %}"correction/add/"{% else %}"edition/"{% endif %};
+        form.submit();
+    }
+    function goBackToNote() {
+        window.location = "/profile/classes/{{ classes_id }}/";
+    }
+{% endblock %}

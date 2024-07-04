@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "note_corrections.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Propozycje poprawek{% endblock %}
+
+{% block banner %}
+<div class="banner_buttons">
+    <form action="/profile/" method="get" class="profile_btn">
+        <button type="submit" class="banner">profil</button>
+    </form>
+    <form action="/profile/logout/" method="get" class="logout_btn">
+        <button type="submit" class="banner">wyloguj</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+    <div class="main">
+        <div class="title">
+            Proponowane poprawki.
+        </div>
+        <div class="corrections_list">
+            {% for correction in corrections %}
+                <div class="item_grid">
+                    <form class="preview" method="get" action="/profile/classes/{{ classes_id }}/correction/preview/{{ correction.id }}/" onclick="previewFunc(this)">
+                        <label class="filtered-classes-list">
+                            {{ correction.author }}
+                        </label>
+                    </form>
+                    <div type="button" onclick="acceptFunc('{{ correction.id }}')" id="accbtn_{{ correction.id }}" class="accbtn">✓</div>
+                    <div type="button" onclick="rejectFunc('{{ correction.id }}')" id="rejbtn_{{ correction.id }}" class="rejbtn">✖</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    function previewFunc(form) {
+        form.submit();
+    }
+    function acceptFunc(id) {
+        window.location = "/profile/classes/{{ classes_id }}/correction/accept/" + id;
+    }
+    function rejectFunc(id) {
+        window.location = "/profile/classes/{{ classes_id }}/correction/reject/" + id;
+    }
+{% endblock %}

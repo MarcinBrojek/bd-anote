@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "add_subject.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Dodaj przedmiot{% endblock %}
+
+{% block banner %}
+<div class="banner_buttons">
+    <form action="/profile/" method="get" class="profile_btn">
+        <button type="submit" class="banner">profil</button>
+    </form>
+    <form action="/profile/logout/" method="get" class="logout_btn">
+        <button type="submit" class="banner">wyloguj</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+<div class="main">
+    <div class="title">
+        Podaj nazwę dla nowego przedmiotu.
+    </div>
+    <form action="/profile/add-subject/" method="post">
+        {% csrf_token %}
+        <div class="text_field">
+            <label>Nazwa :</label>
+            <input type="text" name="name">
+        </div>
+        <button type="submit">Dodaj przedmiot</button>
+    </form>
+</div>
+{% endblock %}

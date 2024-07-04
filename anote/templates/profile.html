@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "profile.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Profil użytkownika{% endblock %}
+
+{% block banner %}
+    <div class="banner_buttons">
+        <form action="/profile/" method="get" class="profile_btn">
+            <button type="submit" class="banner">profil</button>
+        </form>
+        <form action="/profile/logout/" method="get" class="logout_btn">
+            <button type="submit" class="banner">wyloguj</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+    <div class="main" style="grid-template-columns: 150px 150px {% if authorized %}150px{% endif %};">
+        <label class="item_1" onclick="goto('/profile/change-password/')">zmień hasło</label>
+        <label class="item_2" onclick="goto('/profile/my-notes/')">moje notatki</label>
+        <label class="item_3" onclick="goto('/profile/watched/')">obserwowane</label>
+        <label class="item_4" onclick="goto('/profile/classes/')">zajęcia</label>
+        {% if authorized %}
+            <label class="item_5" onclick="goto('/profile/add-subject/')">dodaj przedmiot</label>
+            <label class="item_6" onclick="goto('/profile/add-classes/')">dodaj zajęcia</label>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+function goto(link) {
+    window.location = link;
+}
+{% endblock %}

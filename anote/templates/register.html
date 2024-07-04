@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "register.css" %}">
+{% endblock %}
+
+{% block title %}Rejestracja{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+<div class="main">
+    <div class="title">
+        Podaj dane potrzebne do rejestracji.
+    </div>
+    <form action="/login/register/" method="post">
+        {% csrf_token %}
+        <div class="text_field">
+            <label>Imię :</label> 
+            <input type="text" name="first_name" value="{{ first_name }}">
+        </div>
+        <div class="text_field">
+            <label>Nazwisko :</label>
+            <input type="text" name="last_name" value="{{ last_name }}">
+        </div>
+        <div class="text_field">
+            <label>Email :</label>
+            <input type="text" name="email" value="{{ email }}">
+        </div>
+        <div class="text_field">
+            <label>Hasło :</label>
+            <input type="password" name="password">
+        </div>
+        <div class="text_field">
+            <label>Powtórz hasło :</label>
+            <input type="password" name="repeated_password">
+        </div>
+        <button type="submit">Zarejestruj</button>
+    </form>
+</div>
+{% endblock %}

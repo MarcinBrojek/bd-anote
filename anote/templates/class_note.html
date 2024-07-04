@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "class_note.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block banner %}
+    <div class="banner_buttons">
+        <form action="/profile/" method="get" class="profile_btn">
+            <button type="submit" class="banner">profil</button>
+        </form>
+        <form action="/profile/logout/" method="get" class="logout_btn">
+            <button type="submit" class="banner">wyloguj</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+    <div class="context">
+        <div class="names">
+            <div class="label_name">Przedmiot:</div>
+            <div class="label_name">Typ:</div>
+            <div class="label_name">Grupa:</div>
+            <div class="label_name">Data:</div>
+            <div class="label_name">Rozpoczęcie:</div>
+            <div class="label_name">Zakończenie:</div>
+            <div class="label_name">Kontakt:</div>
+        </div>
+        <div class="values">
+            <div class="label_value">{{ subject }}</div>
+            <div class="label_value">({{ classes_type }}) {% if classes_type == "EXE" %}Ćwiczenia{% elif classes_type == "LEC" %}Wykład{% elif classes_type == "LAB" %}Laboratorium{% else %}Seminarium{% endif %}</div>
+            <div class="label_value">{{ group_number }}</div>
+            <div class="label_value">{{ date }}</div>
+            <div class="label_value">{{ start_time }}</div>
+            <div class="label_value">{{ end_time }}</div>
+            <div class="label_value">{{ email }}</div>
+        </div>
+    </div>
+    <div class="options">
+        {% for index, action in actions %}
+            <form action="{{ action.link }}">
+                <button type="submit" class="dropdown_btn" style="grid-column: {{ index }}; grid-row: 1; display: none;">{{ action.name }}</button>
+            </form>
+        {% endfor %}
+        <form action="/note/{{ note_id }}/download/" method="get">
+            <button type="submit" class="download">pobierz</button>
+        </form>
+        <button class="actions" onclick="showDropdown()">opcje</button>
+    </div>
+    <div class="note">
+        {% if note.visibility %}
+            {% if note.type == 'TXT' %}
+                <pre>{{ note.text }}</pre>
+            {% elif note.type == 'MD' %}
+                {% load markdownify %}
+                {{ note.text|markdownify }}
+            {% elif note.type == 'LTX'%}
+                <a class="download_link" href="/note/{{ note_id }}/pdf_note">Otwórz plik pdf.</a>
+            {% endif %}
+        {% else %}
+            <div class="no_visible_note">
+                Notatka w trakcie edycji.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    function showDropdown() {
+        let btns = document.getElementsByClassName("dropdown_btn");
+        for (var i = 0; i < btns.length; i += 1) {
+            if (btns[i].style.display === "none") {
+                btns[i].style.display = "block";
+            } else {
+                btns[i].style.display = "none";
+            }
+        }
+    }
+{% endblock %}

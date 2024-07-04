@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    {% block css %}{% endblock %}
+    <title>{% block title %}Title{% endblock %}</title>
+</head>
+<body>
+<div class="banner">
+    <div class="logo" onclick="{%block click_logo %}login_page(){% endblock %}">aNote</div>
+    {% block banner %}{% endblock %}
+</div>
+<div class="info" {% block info_hidden %}{% endblock %} onclick="removeInfo()">
+    {% block info %}{% endblock %}
+</div>
+<div class="body">
+{% block body %}
+{% endblock %}
+</div>
+<script>
+    function removeInfo() {
+        let info = document.getElementsByClassName("info").item(0);
+        info.remove();
+    }
+    function login_page() {
+        window.location = "/login/";
+    }
+    function profile_page() {
+        window.location = "/profile/";
+    }
+    {% block scripts %}
+    {% endblock %}
+</script>
+</body>
+</html>

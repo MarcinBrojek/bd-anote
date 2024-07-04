@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "change.css" %}">
+{% endblock %}
+
+{%block click_logo %}profile_page(){% endblock %}
+
+{% block title %}Zmiana hasła{% endblock %}
+
+{% block banner %}
+<div class="banner_buttons">
+    <form action="/profile/" method="get" class="profile_btn">
+        <button type="submit" class="banner">profil</button>
+    </form>
+    <form action="/profile/logout/" method="get" class="logout_btn">
+        <button type="submit" class="banner">wyloguj</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+    <div class="main">
+        <div class="title">
+            Podaj stare i nowe hasło.
+        </div>
+        <form action="/profile/change-password/" method="post">
+            {% csrf_token %}
+            <div class="text_field">
+                <label>Stare hasło :</label>
+                <input type="password" name="old_password"><br>
+            </div>
+            <div class="text_field">
+                <label>Nowe hasło :</label>
+                <input type="password" name="new_password"><br>
+            </div>
+            <div class="text_field">
+                <label>Powtórz nowe hasło :</label>
+                <input type="password" name="repeated_new_password"><br>
+            </div>
+            <button type="submit">Ustaw nowe hasło</button>
+        </form>
+    </div>
+{% endblock %}

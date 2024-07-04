@@ -1,0 +1,102 @@
+.body {
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) 450px minmax(100px, 1fr);
+    grid-template-rows: auto;
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.login_form {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 25px 400px 25px;
+    grid-template-rows: 25px auto 30px 30px 25px;
+    justify-items: stretch;
+
+    align-items: center;
+    background: #F7F5F5;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+p.password {
+    margin-top: 10px;
+}
+
+form {
+    display: inline;
+}
+
+form#login {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+div.buttons {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+button {
+    width: 39%;
+    margin: 0 5%;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    height: 30px;
+    background: #2D3131;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+button:hover {
+    color: #2D3131;
+    background: white;
+}
+
+a {
+    grid-column: 2;
+    grid-row: 3;
+    font-size: 12px;
+    padding: 4px;
+    text-align: center;
+    align-items: center;
+    display: block;
+    width: 100%;
+}
+
+a:link {
+    color: #4F6F81;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #4F6F81;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #4F6F81;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #4F6F81;
+    text-decoration: underline;
+}

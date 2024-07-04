@@ -1,0 +1,135 @@
+.body {
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) 450px minmax(30px, 1fr) 450px minmax(100px, 1fr);
+    grid-template-rows: auto;
+    justify-items: stretch;
+    align-items: start;
+}
+
+.search {
+    grid-column: 4;
+    grid-row: 1;
+    display: grid;
+
+    grid-template-columns: 25px 400px 25px;
+    grid-template-rows: 25px auto 10px auto 25px;
+    justify-items: stretch;
+    align-items: center;
+
+    background: #F7F5F5;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.list {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 25px 400px 25px;
+    grid-template-rows: 25px auto 10px auto 25px;
+    justify-items: stretch;
+    align-items: center;
+
+    background: #F7F5F5;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.classes_list_form {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+div.item {
+    display: grid;
+    grid-template-columns: auto 20px;
+    grid-template-rows: auto;
+    justify-items: stretch;
+    align-items: center;
+
+    height: auto;
+    min-height: 40px;
+    border: 1px solid #000000;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 12px;
+    padding: 5px;
+    margin: 5px;
+}
+
+label.watched_group {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+}
+
+div.delete_btn {
+    grid-column: 2;
+    grid-row: 1;
+    color: red;
+}
+
+div.delete_btn:hover {
+    font-size: 20px;
+}
+
+.title {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 25px;
+}
+
+form:not(.profile_btn):not(.logout_btn) {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+.text_field {
+    width: auto;
+    padding-top: 5px;
+    padding-top: 5px;
+}
+
+label {
+    display: block;
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+select {
+    width: 100%;
+    height: 30px;
+
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+button:not(.banner) {
+    width: 50%;
+    margin-top: 10px;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    height: 30px;
+    background: #2D3131;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 12px;
+    align-items: center;
+}
+
+button:not(.banner):hover {
+    color: #2D3131;
+    background: white;
+}

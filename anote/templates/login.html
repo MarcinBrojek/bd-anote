@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "login.css" %}">
+{% endblock %}
+
+{% block title %}Logowanie{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block info_hidden %}{% if not info %}hidden{% endif %}{% endblock %}
+
+{% block info %}{{ info }}{% endblock %}
+
+{% block body %}
+    <div class="login_form">
+        <form action="/login/" method="post" id="login">
+            {% csrf_token %}
+            <p class="email">Email :</p>
+            <input class="email" type="text" name="email">
+            <p class="password">Hasło :</p>
+            <input class="password" type="password" name="password">
+        </form>
+            <a class="forgotten" href="/login/remind-password/">zapomniałem(łam) hasła</a>
+        <div class="buttons">
+        <button type="button" onclick="login()">Zaloguj</button>
+        <form action="/login/register/" method="get">
+            <button type="submit">Rejestracja</button>
+        </form>
+    </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    function login() {
+        document.getElementById("login").submit();
+    }
+{% endblock %}
